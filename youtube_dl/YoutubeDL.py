@@ -2375,6 +2375,8 @@ class YoutubeDL(object):
         write_string(encoding_str, encoding=None)
 
         self._write_string('[debug] youtube-dl version ' + __version__ + (' (single file build)\n' if ytdl_is_updateable() else '\n'))
+        self._write_string('** This build is unofficial daily builds, provided for ease of use.\n')
+        self._write_string('** Please do not ask for any support.\n')
         if _LAZY_LOADER:
             self._write_string('[debug] Lazy loading extractors enabled\n')
         writeln_debug = lambda *s: self._write_string('[debug] %s\n' % (''.join(s), ))  # moved down for easier merge
