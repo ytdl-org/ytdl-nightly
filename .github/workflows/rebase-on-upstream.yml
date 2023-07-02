@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 0
-    - uses: ytdl-patched/rebase-upstream-action@master
+        token: ${{ secrets.GH_PAT }}
+    - uses: ytdl-org/ytdl-patched-rebase-upstream-action@master
       with:
         token: ${{ secrets.GH_PAT }}
+        upstream: ytdl-org/youtube-dl
