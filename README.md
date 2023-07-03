@@ -1,7 +1,7 @@
 [![Build Status](https://github.com/ytdl-org/youtube-dl/workflows/CI/badge.svg)](https://github.com/ytdl-org/youtube-dl/actions?query=workflow%3ACI)
 
 
-**This repository is for unofficial daily builds.**
+**This repository is for unofficial nightly builds.**
 **Please do not open any issues nor pull requests.**
 
 youtube-dl - download videos from youtube.com or other video platforms
