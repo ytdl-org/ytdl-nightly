@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from __future__ import unicode_literals
 from datetime import datetime
 import sys
 
