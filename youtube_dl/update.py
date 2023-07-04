@@ -17,6 +17,21 @@ from .utils import encode_compat_str
 
 from .version import __version__
 
+REPO = 'ytdl-org/ytdl-nightly'
+
+
+def rsa_verify(message, signature, key):
+    assert isinstance(message, bytes)
+    byte_size = (len(bin(key[0])) - 2 + 8 - 1) // 8
+    signature = ('%x' % pow(int(signature, 16), key[1], key[0])).encode()
+    signature = (byte_size * 2 - len(signature)) * b'0' + signature
+    asn1 = b'3031300d060960864801650304020105000420'
+    asn1 += hashlib.sha256(message).hexdigest().encode()
+    if byte_size < len(asn1) // 2 + 11:
+        return False
+    expected = b'0001' + (byte_size - len(asn1) // 2 - 3) * b'ff' + b'00' + asn1
+    return expected == signature
+
 
 def detect_variant():
     if hasattr(sys, 'frozen'):
@@ -64,7 +79,7 @@ def run_update(ydl):
         report_unable('write to %s; Try running as administrator' % file, True)
 
     def report_network_error(action, delim=';'):
-        report_unable('%s%s Visit  https://github.com/ytdl-patched/youtube-dl/releases/latest' % (action, delim), True)
+        report_unable('%s%s Visit  https://github.com/%s/releases/latest' % (action, delim, REPO), True)
 
     def calc_sha256sum(path):
         h = hashlib.sha256()
