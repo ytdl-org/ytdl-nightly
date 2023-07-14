@@ -67,7 +67,7 @@ def run_update(ydl):
     Returns whether the program should terminate
     """
 
-    JSON_URL = 'https://api.github.com/repos/ytdl-patched/youtube-dl/releases/latest'
+    JSON_URL = 'https://api.github.com/repos/%s/releases/latest' % (REPO, )
 
     def report_error(msg, expected=False):
         ydl.report_error(msg, tb='' if expected else None)
