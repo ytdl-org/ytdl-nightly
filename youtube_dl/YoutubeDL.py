@@ -127,6 +127,10 @@ from .postprocessor import (
     get_postprocessor,
 )
 from .version import __version__
+try:
+    from .version import RELEASE_GIT_HEAD
+except ImportError:
+    RELEASE_GIT_HEAD = None
 
 if compat_os_name == 'nt':
     import ctypes
@@ -2508,11 +2512,14 @@ class YoutubeDL(object):
         write_string(encoding_str, encoding=None)
 
         writeln_debug = lambda *s: self._write_string('[debug] %s\n' % (''.join(s), ))
-        writeln_debug('youtube-dl version ', __version__)
+        writeln_debug('youtube-dl version ', __version__,
+                      ' [{0}]'.format(RELEASE_GIT_HEAD[:9]) if RELEASE_GIT_HEAD else '',
+                      (' (single file build)' if ytdl_is_updateable() else ''))
+        writeln_debug('** This version was built from the latest master code at https://github.com/ytdl-org/youtube-dl.')
+        writeln_debug('** For support, visit the main site.')
         if _LAZY_LOADER:
-            writeln_debug('Lazy loading extractors enabled')
-        if ytdl_is_updateable():
-            writeln_debug('Single file build')
+            writeln_debug('[debug] Lazy loading extractors enabled')
+
         try:
             sp = subprocess.Popen(
                 ['git', 'rev-parse', '--short', 'HEAD'],
