@@ -29,3 +29,5 @@ __version__ = {!r}
 
 with open('youtube_dl/version.py', 'wt') as f:
     f.write(VERSION_FILE)
+
+print(VERSION)
