@@ -41,7 +41,7 @@ jobs:
         ytdl_version=$(python devscripts/update-version.py)
         echo "ytdl_version=$ytdl_version" >> "$GITHUB_OUTPUT"
         sha=${{ inputs.build-commit }}
-        sed -i -rn -e '/^ *RELEASE_GIT_HEAD *=/z;$s/$/&'"\nRELEASE_GIT_HEAD = '${sha}'/;p}"
+        sed -i -rn -e '/^ *RELEASE_GIT_HEAD *=/z;$s/$/&'"\nRELEASE_GIT_HEAD = '${sha}'/;p}" youtube_dl/version.py
         x=${sha#?????????}; sha=${sha%$x}
         echo "Version = $ytdl_version${sha+[ }${sha}${sha+]}"
         make issuetemplates
@@ -130,7 +130,7 @@ jobs:
       run: |
         ytdl_version=$(python devscripts/update-version.py)
         sha=${{ inputs.build-commit }}
-        sed -i -rn -e '/^ *RELEASE_GIT_HEAD *=/z;$s/$/&'"\nRELEASE_GIT_HEAD = '${sha}'/;p}"
+        sed -i -rn -e '/^ *RELEASE_GIT_HEAD *=/z;$s/$/&'"\nRELEASE_GIT_HEAD = '${sha}'/;p}" youtube_dl/version.py
         x=${sha#?????????}; sha=${sha%$x}
         echo "Version = $ytdl_version${sha+[ }${sha}${sha+]}"
     # - name: Run PyInstaller Script
