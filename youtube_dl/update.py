@@ -14,6 +14,8 @@ from .utils import encode_compat_str
 
 from .version import __version__
 
+REPO = 'ytdl-org/ytdl-nightly'
+
 
 def rsa_verify(message, signature, key):
     assert isinstance(message, bytes)
@@ -62,7 +64,7 @@ def run_update(ydl):
     Returns whether the program should terminate
     """
 
-    JSON_URL = 'https://api.github.com/repos/ytdl-patched/youtube-dl/releases/latest'
+    JSON_URL = 'https://api.github.com/repos/%s/releases/latest' % (REPO, )
 
     def report_error(msg, expected=False):
         ydl.report_error(msg, tb='' if expected else None)
@@ -74,7 +76,7 @@ def run_update(ydl):
         report_unable('write to %s; Try running as administrator' % file, True)
 
     def report_network_error(action, delim=';'):
-        report_unable('%s%s Visit  https://github.com/ytdl-patched/youtube-dl/releases/latest' % (action, delim), True)
+        report_unable('%s%s Visit  https://github.com/%s/releases/latest' % (action, delim, REPO), True)
 
     def calc_sha256sum(path):
         h = hashlib.sha256()
