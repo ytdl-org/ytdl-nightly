@@ -16,6 +16,7 @@ from .version import __version__
 
 REPO = 'ytdl-org/ytdl-nightly'
 
+
 def rsa_verify(message, signature, key):
     assert isinstance(message, bytes)
     byte_size = (len(bin(key[0])) - 2 + 8 - 1) // 8
