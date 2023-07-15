@@ -36,4 +36,5 @@ jobs:
     needs: rebase
     if: ${{ github.event_name != 'schedule' && needs.rebase.outputs.build-commit != '' }}
     uses: ./.github/workflows/build.yml
-  
+    with:
+      build-commit: ${{ needs.rebase.outputs.build-commit }}
