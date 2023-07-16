@@ -30,7 +30,7 @@ jobs:
       shell: bash
       run: |
         NEW_HEAD=$(git rev-parse HEAD)
-        [ "${{ env.HEAD_NOW }}" != "$NEW_HEAD" ] && echo "build-commit=$NEW_HEAD" >> "$GITHUB_OUTPUT"
+        [ "${{ env.HEAD_NOW }}" = "$NEW_HEAD" ] || echo "build-commit=$NEW_HEAD" >> "$GITHUB_OUTPUT"
         
   build:
     needs: rebase
