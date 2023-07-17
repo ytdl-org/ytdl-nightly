@@ -149,10 +149,10 @@ jobs:
         asset_content_type: application/vnd.microsoft.portable-executable
     - name: Get SHA2-256SUMS for youtube-dl.exe
       id: sha256_win
-      run: echo "sha256_win=$((Get-FileHash youtube-dl.exe -Algorithm SHA256).Hash.ToLower())" >> "env:$GITHUB_OUTPUT"
+      run: echo "sha256_win=$((Get-FileHash youtube-dl.exe -Algorithm SHA256).Hash.ToLower())" >> "$env:GITHUB_OUTPUT"
     - name: Get SHA2-512SUMS for youtube-dl.exe
       id: sha512_win
-      run: echo "sha512_win=$((Get-FileHash youtube-dl.exe -Algorithm SHA512).Hash.ToLower())" >> "env:$GITHUB_OUTPUT"
+      run: echo "sha512_win=$((Get-FileHash youtube-dl.exe -Algorithm SHA512).Hash.ToLower())" >> "$env:GITHUB_OUTPUT"
     - name: Install PyCrypto
       shell: bash
       run: |
