@@ -106,6 +106,8 @@ jobs:
   build_windows:
     runs-on: windows-2022
     needs: build_unix
+    env:
+      PYCRYPTO: pycrypto-2.6.1-cp34-none-win32
     outputs:
       sha256_win: ${{ steps.sha256_win.outputs.sha256_win }}
       sha512_win: ${{ steps.sha512_win.outputs.sha512_win }}
@@ -135,6 +137,23 @@ jobs:
         echo "Version = $ytdl_version${sha+[ }${sha}${sha+]}"
     # - name: Run PyInstaller Script
     #   run: python -m PyInstaller --onefile --console --distpath dist/ -n youtube-dl youtube_dl\__main__.py
+    - name: Cache PyCrypto
+      id: cache_pc
+      uses: actions/cache@v3
+      with:
+        key: ${{ env.PYCRYPTO }}
+        path: ./${{ env.PYCRYPTO }}
+    - name: Acquire PyCrypto
+      if: ${{ ! steps.cache_pc.outputs.cache-hit }}
+      shell: bash
+      run: |
+        mkdir -p ./${PYCRYPTO}
+        cd ${PYCRYPTO}
+        curl -L -O "https://web.archive.org/web/20200627032153/http://www.voidspace.org.uk/python/pycrypto-2.6.1/pycrypto-2.6.1-cp34-none-win32.whl"
+    - name: Install PyCrypto
+      shell: bash
+      run: |
+        python -m pip install ./${PYCRYPTO}/${PYCRYPTO}.whl
     - name: Build EXE file
       run: python setup.py py2exe
     - name: Upload youtube-dl.exe Windows binary
@@ -153,22 +172,6 @@ jobs:
     - name: Get SHA2-512SUMS for youtube-dl.exe
       id: sha512_win
       run: echo "sha512_win=$((Get-FileHash youtube-dl.exe -Algorithm SHA512).Hash.ToLower())" >> "$env:GITHUB_OUTPUT"
-    - name: Install PyCrypto
-      shell: bash
-      run: |
-        curl -L -O "https://web.archive.org/web/20200627032153/http://www.voidspace.org.uk/python/pycrypto-2.6.1/pycrypto-2.6.1-cp34-none-win32.whl"
-        python -m pip install pycrypto-2.6.1-cp34-none-win32.whl
-    - name: Build EXE file with PyCrypto
-      run: python setup.py py2exe
-    - name: Upload youtube-dl-pycrypto.exe Windows binary
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ needs.build_unix.outputs.upload_url }}
-        asset_path: ./youtube-dl.exe
-        asset_name: youtube-dl-pycrypto.exe
-        asset_content_type: application/vnd.microsoft.portable-executable
 
   finish:
     runs-on: ubuntu-latest
