@@ -21,6 +21,7 @@ jobs:
       run: |
         echo "HEAD_NOW=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
     - name: Rebase
+      # fetches upstream as git remote `upstream`
       uses: ytdl-org/ytdl-patched-rebase-upstream-action@master
       with:
         token: ${{ secrets.GH_PAT }}
@@ -30,7 +31,7 @@ jobs:
       shell: bash
       run: |
         NEW_HEAD=$(git rev-parse HEAD)
-        [ "${{ env.HEAD_NOW }}" = "$NEW_HEAD" ] || echo "build-commit=$NEW_HEAD" >> "$GITHUB_OUTPUT"
+        [ "${{ env.HEAD_NOW }}" = "$NEW_HEAD" ] || echo "build-commit=$(git rev-parse upstream/master)" >> "$GITHUB_OUTPUT"
         
   build:
     needs: rebase
