@@ -10,6 +10,9 @@ sys.path.insert(0, dirn(dirn(os.path.abspath(__file__))))
 from utils import read_file
 from youtube_dl.compat import compat_open as open
 
+sys.path.insert(0, dirn(dirn(os.path.abspath(__file__))))
+
+from utils import read_file
 from youtube_dl.compat import compat_open as open
 
 README_FILE = 'README.md'
