@@ -12,7 +12,7 @@ jobs:
       build-commit: ${{ steps.relocate.outputs.build-commit }}
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
         token: ${{ secrets.GH_PAT }}
