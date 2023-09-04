@@ -36,7 +36,7 @@ jobs:
     - name: Check out
       uses: actions/checkout@v3
       with:
-        ref: ${{ github.event.ref }}
+        ref: refs/heads/master
         fetch-depth: 0
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -62,11 +62,11 @@ jobs:
         git add -u
         git commit -m "Release (nightly) ${{ steps.update_version.outputs.version }}" \
           -m "Created by: ${{ github.event.sender.login }}" -m ":ci skip all"
-        git push origin --force ${{ github.event.ref }}:release
+        git push origin --force master:release
         echo "head_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
     - name: Update master
       if: ${{ inputs.push-version-commit }}
-      run: git push origin ${{ github.event.ref }}
+      run: git push origin master
     - name: Get Changelog      
       id: get_changelog
       run: |
@@ -134,7 +134,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        ref: ${{ github.event.ref }}
+        ref: refs/heads/release
     # reason to choose 3.4: https://media.discordapp.net/attachments/807245652072857613/942409077701619742/unknown.png
     - name: Set up Python 3.4
       uses: actions/setup-python@v4
