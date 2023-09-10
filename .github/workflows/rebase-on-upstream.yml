@@ -12,7 +12,7 @@ jobs:
       build-commit: ${{ steps.relocate.outputs.build-commit }}
     steps:
     - name: Checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@v3
       with:
         fetch-depth: 0
         token: ${{ secrets.GH_PAT }}
@@ -22,7 +22,7 @@ jobs:
         echo "HEAD_NOW=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
     - name: Rebase
       # fetches upstream as git remote `upstream`
-      uses: ytdl-org/ytdl-patched-rebase-upstream-action@master
+      uses: ./.github/workflows/rebaser.yml
       with:
         token: ${{ secrets.GH_PAT }}
         upstream: ytdl-org/youtube-dl
