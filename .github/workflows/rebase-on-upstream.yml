@@ -22,7 +22,7 @@ jobs:
         echo "HEAD_NOW=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
     - name: Rebase
       # fetches upstream as git remote `upstream`
-      uses: ./.github/workflows/rebaser.yml
+      uses: ytdl-org/reverse-rebase-upstream-action@master
       with:
         token: ${{ secrets.GH_PAT }}
         upstream: ytdl-org/youtube-dl
