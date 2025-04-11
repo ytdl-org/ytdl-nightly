@@ -60,7 +60,7 @@ jobs:
         git config --local user.name  "GitHub Actions"
         # rebase new UPSTREAM commits onto TARGET
         UPSTREAM_SHA=$(git rev-parse HEAD)
-        git rebase "refs/heads/${TARGET}"
+        git rebase -X ours "refs/heads/${TARGET}"
         if [ -n "$(git log --max-count 1 --oneline "HEAD...${TARGET}")"  ]; then
           git branch -M "$REBASE" "$TARGET"
           if [ "${{ inputs.push }}" = true ]; then
