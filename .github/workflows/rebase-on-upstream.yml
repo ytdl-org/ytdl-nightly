@@ -26,13 +26,14 @@ jobs:
       with:
         token: ${{ secrets.GH_PAT }}
         upstream: ytdl-org/youtube-dl
+        rebase-args: '-X ours'
     - name: Relocate
       id: relocate
       shell: bash
       run: |
         NEW_HEAD=$(git rev-parse HEAD)
         [ "${{ env.HEAD_NOW }}" = "$NEW_HEAD" ] || echo "build-commit=$(git rev-parse upstream/master)" >> "$GITHUB_OUTPUT"
-        
+
   build:
     needs: rebase
     if: ${{ needs.rebase.outputs.build-commit }}
